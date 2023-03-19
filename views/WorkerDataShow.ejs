@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="style.css">
+    <title>Workers Data</title>
+</head>
+<body>
+    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="http://localhost:8080/hii">Add Worker <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="http://localhost:8080/getDataForWorker">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="http://localhost:8080/getAttendanceData">View Attendance <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="http://127.0.0.1:5500/Home.html">Take Attendance <span class="sr-only">(current)</span></a>
+            </li>
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Search By Department
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="http://localhost:8080/getDataForElectrician">Electrician</a>
+                <a class="dropdown-item" href="http://localhost:8080/getDataForPlumber">Plumber</a>
+                <a class="dropdown-item" href="http://localhost:8080/getDataForCarpenter">Carpenter</a>
+              </div>
+            </li>
+          
+          </ul>
+        
+            </nav>
+            <br><br>
+
+
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <%dataList.forEach(data =>{%>
+              <!-- <div class="row"> -->
+                <div class="column">
+                  <div class="card">
+                    <img class="card-img-top" src="/upload/<%=  data.image %>" alt="Card image cap">
+                    <h5 class="card-title"> Name : <br> <%= data.fname %>   <%= data.lname %> </h5>
+                    <h5 class="card-title">Phone Number : <br> <%= data.phone %></h5>
+                    <h5 class="card-title">Email Address : <br> <%= data.email %></h5>
+                    <h5 class="card-title">Department : <br> <%= data.Department %></h5>
+                    <a style="color: white;" href="/seedetail/<%= data.email %>"> <button   style="border-collapse: collapse; color: white;" class="btn btn-success">See Details</button></a>
+
+                    <!-- <button  class="btn btn-success"><a href="/seedetail/<%= data.email %>">See Details</a><br><br></button> -->
+
+                  
+                  </div>
+                <!-- </div> -->
+
+
+              <!-- <div class="column">
+                <div class="card">
+              <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="/upload/<%=  data.image %>" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title"> <%= data.fname %>   <%= data.lname %> </h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div> -->
+
+
+            
+                
+                <!-- <img src="/upload/<%=  data.image %>"style="width:100%" id="img"><br>
+                <h4>First Name : <%= data.fname %></h4>
+                <h4>Last Name : <%= data.lname %></h4>
+                <h4>Phone Number : <%= data.phone %></h4>
+                <h4>Email Address : <%= data.email %></h4>
+                <h4>Department : <%= data.Department %></h4>
+<br>
+                <button><a href="/seedetail/<%= data.email %>">See Details</a><br><br></button> -->
+
+
+            </div>
+                </div>
+
+            <%})%>
+    
+ 
+           
+
+    <script src="../connectivity.js"></script>
+
+</body>
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+img{
+  height: 300px;
+  width: 300px;
+}
+
+/* Float four columns side by side */
+.column {
+  float: left;
+  width: 25%;
+  padding: 0 10px;
+}
+
+/* Remove extra left and right margins, due to padding */
+.row {margin: 0 -5px;}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive columns */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+/* Style the counter cards */
+.card {
+  height: 600px;
+  width: 300px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  text-align: center;
+  background-color: #f1f1f1;
+}
+
+
+
+
+
+
+
+
+
+
+
+</style>
+
+
+</html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Add Worker</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -12,31 +12,68 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <header>
+    <a style="color: white;" href="http://localhost:8080/getDataForWorker"> <button   style="border-collapse: collapse; color: white;" class="btn btn-success">Home</button></a>
+
+</header>
     <!-- < -->
   <div class="form-group" id="container">
     <form action="http://localhost:8080/post" method="post" enctype="multipart/form-data">
-      <center><h1 style="color: white;">Wallpaper Upload</h1>  </center>
-<br>br  
-<center>  <label for="Device" style="color: white;">Choose a Device:</label></center>  
+      <center><h1>Add new Worker data</h1>  </center>
+      <hr>
 
-   <center>   <select name="device" id="Mob" style="width: 150px;">
-        <option value="Mobile">Mobile</option>
-        <option value="PC">PC</option>
-      </select></center><br>
+      <br>
+<center><label for="">First Name : </label>
+  <input type="text" name="fname" id="fn" style="align-items: left;"><br><br>
+</center>
+<center> 
+  <label for="">Last Name : </label>
+  <input type="text" name="lname" id="ln"><br><br>
+</center>
+<center>
+  <label for="">Phone Number: </label>
+    <input type="text" name="phone" id="pn"><br><br>
+  </center>
+  <center>
+    <label for="">Email : </label>
+    <input type="email" name="email" id="em"><br><br>
+  </center>
+  <center>
+    <label for="Dep">Choose Department :</label>
+    <select name="Department" id="dep" style="width: 150px;">
+      <option value="Carpenter">Carpenter</option>
+      <option value="Plumber">Plumber</option>
+      <option value="Electrician">Electrician</option>
+    </select><br><br>
+  </center>
+  
+  <center>
+    <label for="">Previous Company name : </label>
+    <input type="text" name="Previous_comp" id="Previous_comp"><br> <span>(Put NA if you are a freshers)</span><br><br>
+  </center>
+  
+  <center>
+    <label for="">Experience in Years : </label>
+    <input type="text" name="experience" id="experience"><br> <span>(Put NA if you are a freshers)</span><br><br>
+  </center>
+  <center>
+    <label for="image">Upload Your Profile Picture : </label>
+    <input type="file" name="file"  id="" style="margin-left: 150px;"></center>
+  </center>
+  
+<br>
 
-    <center>  <label for="wallpaper" style="color: white;">Choose theme :</label><br>
+<center>
+  <label for="bond_for_days">Bond : </label>
+  <input type="text" name="bond_for_days"  id="" style="margin-left: 150px;"></center>
+</center>
 
-      <select name="wallpaper" id="Mob">
-        <option value="Nature">Nature</option>
-        <option value="Sports">Sports</option>
-        <option value="Dark Wallpaper">Dark Wallpaper</option>
-      </select></center><br>
-
-    <center><input type="file" name="file" class="form-control-file text-white" id="" style="margin-left: 150px;"></center>
-    <center><br>
+<br>    
+<center>
     <button class="btn btn-outline-success my-2 my-sm-0" id="dimg" type="submit" >submit</button></center>
+  </center>
   </form>
-
+</center>
   </div>
 
     <!-- <div class="cart">
@@ -53,15 +90,15 @@
 
   }
   #container{
-    height: 500px;
-    width: 500px;
-    background-color: #282828;
+    height: 700px;
+    width: 600px;
     left: 0px;
     right: 0px;
     top: 0px;
     bottom: 0px;
     margin: auto;
     position: absolute;
+    border: 1.5px solid black;
   }
 </style>
 </html>

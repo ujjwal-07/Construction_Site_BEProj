@@ -5,7 +5,15 @@ const app = express();
 const multer = require('multer');
 var path = require('path');
 const { strictEqual } = require('assert');
+const  {spawn } = require("child_process")
+const csv = require('csv-parser')
+const fs = require('fs')
+let results = []
+const csvtojson = require("csvtojson");
 
+
+
+console.log(results)
 
 app.set("view engine", "ejs");
 
@@ -17,7 +25,7 @@ app.use(express.static('public'));
 var router = express.Router();
 
 
-var mongoDB = 'mongodb://127.0.0.1/wallpaperdb';
+var mongoDB = 'mongodb://127.0.0.1/workerdata';
 mongoose.connect(mongoDB).then(()=>{
     console.log('db connected');
 }).catch(err=>{
@@ -25,12 +33,28 @@ mongoose.connect(mongoDB).then(()=>{
 })
 
 const uploadWallpaperschema = new mongoose.Schema({
-device : String,
-wallpaper : String,
+fname : String,
+lname : String,
+phone : Number,
+email : String,
+Department : String,
+Previous_comp : String,
+experience : Number,
+bond_for_days : Number,
 image: String
 })
 
 const wallpapermodel = mongoose.model("model", uploadWallpaperschema)
+
+
+const attendanceschema = new mongoose.Schema({
+    Name : String,
+    Time : String,
+    Date : String,
+    Attedance : Number
+})
+
+const attendanceModel = mongoose.model("newmodel",attendanceschema)
 
 const storage = multer.diskStorage({
     destination:"./public/upload/",
@@ -48,7 +72,7 @@ const upload = multer({
     },
 });
 
-app.get('/hii',(req,res)=>{
+app.get('/addworker',(req,res)=>{
     res.render("mean");
 
 })
@@ -58,81 +82,183 @@ app.post('/post', upload.single('file') ,(req, res)=>{
     var success = req.file.fieldname+ "uploaded succesfully";
 
     var blog = new wallpapermodel({
-        device : req.body.device,
-        wallpaper : req.body.wallpaper,
+        fname: req.body.fname,
+        lname: req.body.lname,
+        phone: req.body.phone,
+        email : req.body.email,
+        Department : req.body.Department,
+        Previous_comp :  req.body.Previous_comp,
+        experience : req.body.experience,
+        bond_for_days : req.body.bond_for_days,
         image : imageFile
 
     });
     blog.save((err,doc)=>{
         if (err) throw err;
     });
-    res.redirect("http://localhost:8080/hii");
+    res.redirect("http://localhost:8080/getDataForWorker");
 
 })
 
 
-app.get("/getData",  (req,res)=>{
-    wallpapermodel.find({device : "PC"}, (err,data)=>{
-        res.render('wallpaper',{
+
+
+
+
+app.get("/seedetail/:email",(req,res)=>{
+    email_find = req.params.email
+    wallpapermodel.find({email : email_find}, (err,data)=>{
+        res.render('see_detail',{
             dataList : data
         })
     })
 })
 
 
-app.get("/getDataForDark",  (req,res)=>{
-    wallpapermodel.find({wallpaper : "Dark Wallpaper"}, (err,data)=>{
-        res.render('wallpaper',{
-            dataList : data
-        })
-    })
-})
 
-app.get("/getDataForSports",  (req,res)=>{
-    wallpapermodel.find({wallpaper : "Sports"}, (err,data)=>{
-        res.render('wallpaper',{
-            dataList : data
-        })
-    })
-})
-
-app.get("/getDataForNature",  (req,res)=>{
-    wallpapermodel.find({wallpaper : "Nature"}, (err,data)=>{
-        res.render('wallpaper',{
-            dataList : data
-        })
-    })
-})
-
-app.get("/getDataForMobile",  (req,res)=>{
+app.get("/getDataForWorker",  (req,res)=>{
     wallpapermodel.find({device : "Mobile"}, (err,data)=>{
-        res.render('wallpaperMobile',{
+        res.render('WorkerDataShow',{
+            dataList : data
+        })  
+    })
+})
+
+
+app.get("/getAttendanceData",  (req,res)=>{
+  
+    fs.createReadStream('Attendancedata.csv').pipe(csv({}))
+    .on('data',(data)=> results.push(data))
+    .on('end',()=>{
+        res.render('showAttendance',{
+            dataList : results
+        }) 
+        results.length = 0
+ 
+    })
+})
+
+app.get("/deleteData/:Name",(req,res)=>{
+    email_find = req.params.Name
+    wallpapermodel.find({email : email_find}, (err,data)=>{
+        res.render('see_detail',{
             dataList : data
         })
     })
 })
 
-app.get("/getDataForMobileDark",  (req,res)=>{
-    wallpapermodel.find({ $and: [{device:"Mobile"},{wallpaper : "Dark Wallpaper"}]}, (err,data)=>{
-        res.render('wallpaperMobile',{
+
+
+
+
+
+// app.get("/demo",  (req,res)=>{
+//     fs.createReadStream('Attendancedata.csv').pipe(csv({}))
+//     .on('data',(data)=> results.push(data))
+//     .on('end',()=>{
+//         console.log(results[0].Name);
+//             res.render('demo',{
+//             dataList : results
+//         })
+//     })
+
+// })
+
+
+app.get("/getDataForPlumber",  (req,res)=>{
+    wallpapermodel.find({ Department : "Plumber"}, (err,data)=>{
+        res.render('WorkerDataShow',{
             dataList : data
         })
     })
 })
-app.get("/getDataForMobileSports",  (req,res)=>{
-    wallpapermodel.find({ $and: [{device:"Mobile"},{wallpaper : "Sports"}]}, (err,data)=>{
-        res.render('wallpaperMobile',{
+app.get("/getDataForCarpenter",  (req,res)=>{
+    wallpapermodel.find({ Department : "Carpenter"}, (err,data)=>{
+        res.render('WorkerDataShow',{
             dataList : data
         })
     })
 })
-app.get("/getDataForMobileNature",  (req,res)=>{
-    wallpapermodel.find({ $and: [{device:"Mobile"},{wallpaper : "Nature"}]}, (err,data)=>{
-        res.render('wallpaperMobile',{
+app.get("/getDataForElectrician",  (req,res)=>{
+    wallpapermodel.find({ Department : "Electrician"}, (err,data)=>{
+        res.render('WorkerDataShow',{ 
             dataList : data
         })
     })
 })
+
+
+// Face Detetction and Liveliness detection part
+
+app.get("/takeAttendance", async(req, res)=>{
+    const py = spawn('python',['blinkdetectiontest.py','ujjwal'])
+    res = ''
+    py.stdout.on('data',(data)=>{
+        // console.log(data.toString());
+        res = data.toString()
+
+})
+
+py.on('open',(code)=>{
+        console.log(`stored result is  ${res}`);
+        res = "detection Passed"
+        if (res === "detection Passed"){
+            console.log("Hii")
+            const py = spawn('python',['AttendanceProject.py','ujjwal'])
+    
+            py.stdout.on('data',(data)=>{
+                // console.log(data.toString());
+                res = data.toString()
+            })
+            
+        }
+        else{
+            console.log("noo");
+        }
+    
+    })
+
+
+    py.on('close',(code)=>{
+        console.log(`stored result is  ${res}`);
+        res = "detection Passed"
+        if (res === "detection Passed"){
+            console.log("Hii")
+            const py = spawn('python',['AttendanceProject.py','ujjwal'])
+    
+            py.stdout.on('data',(data)=>{
+                // console.log(data.toString());
+                res = data.toString()
+            })
+            
+        }
+        else{
+            console.log("noo");
+        }
+    
+    })
+})
+
+
+app.post("/add", async (req,res)=>{
+    csvtojson()
+    .fromFile("Attendancedata.csv")
+    .then(csvData =>{
+        console.log(csvData);
+        attendanceModel.insertMany(csvData).then(function(){
+            console.log("Data Inserted")
+            res.json({success: 'success'});
+        }).catch(function(error){
+            console.log(error)
+        });
+    });
+});
+
+
+
+
+
+
 const port = process.env.PORT || 8080;
 
 app.listen(port, console.log(`Listening on port ${port}..`));
