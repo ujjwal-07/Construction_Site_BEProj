@@ -8,8 +8,14 @@ import cv2
 import numpy as np
 import csv
 import os
+import urllib.request
 from datetime import datetime
 from datetime import date
+import webbrowser  
+
+
+
+
 
 path = 'Images_of_students'
 image = [] 
@@ -55,6 +61,10 @@ def markAttendance(name):
                 for row in csvreader:
                     # update the value in the desired column
                     if row[col_index2] == name:
+                        url = "http://localhost:8080/update/"+name 
+                        webbrowser.open_new_tab(url)   
+                        # return "http://localhost:8080/update/"+name
+                        print("Nmaeee is thiss",name)
                         row[col_index] = int(row[col_index]) + 1
                     # add the updated row to the list
                     updated_rows.append(row)

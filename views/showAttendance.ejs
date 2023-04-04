@@ -25,11 +25,12 @@
 
         <thead class="thead-dark">
           <tr>
+            <!-- <th>ID</th> -->
             <th >Name</th>
-            <th>Time</th>
-            <th>Date</th>
+            <!-- <th>Time</th>
+            <th>Date</th> -->
             <th>Attendance</th>
-            <th>Delete</th>
+            <!-- <th>Delete</th> -->
 
         </tr>
 
@@ -39,11 +40,16 @@
         <%dataList.forEach(data =>{%>
 
           <tr>
-            <td><%= data.Name %></td>
-            <td><%= data.Time %></td>
-            <td><%= data.Date %></td>
+           <!-- <td><%= data.ID %></td> -->
+            <td><%= data.fname %> <%= data.lname %></td>
+          
+            <!-- <td><%= data.Attendance %></td> -->
+
+
+            <!-- <td><%= data.Time %></td>
+            <td><%= data.Date %></td> -->
             <td><%= data.Attendance %>/30</td>
-            <td><button type="button" class="btn btn-danger" onclick="SomeDeleteRowFunction()">Delete</button>
+            <!-- <td><button type="button" class="btn btn-danger" onclick="SomeDeleteRowFunction()">Delete</button> -->
             </td>
             <%})%>
         </tbody>
@@ -52,8 +58,14 @@
     </div>
 
      
+<!--     
     
-    
+    1,UJJWA_PROFILE,16:07:29,2023-02-23,1
+    2,UJJWAL_PROFILE,18:14:42,2023-02-23,5
+    3,POGBA,12:16:48,2023-02-27,1
+    4,STUDENT3,15:57:09,2023-02-27,1
+    5,RONALDO,14:06:31,2023-03-09,0 -->
+
 
 </center>
 
@@ -62,11 +74,9 @@
 
 
 function SomeDeleteRowFunction() {
-      // event.target will be the input element.
-      var td = event.target.parentNode; 
-      var tr = td.parentNode; // the row to be removed
-      console.log(tr.innerHTML)
-      tr.parentNode.removeChild(tr);
+    alert("this is alert")
+    let input = prompt("Do you Really want to delete the data? Put the index of row you want to delete. ")
+    window.location.href = `http://localhost:8080/deleteWorkerData/${input}`
 }
 
 

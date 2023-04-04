@@ -1,21 +1,30 @@
-const mongoose = require('mongoose');
+
 require("dotenv").config();
+
+const path = require("path")
+
+const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 const multer = require('multer');
-var path = require('path');
 const { strictEqual } = require('assert');
 const  {spawn } = require("child_process")
 const csv = require('csv-parser')
 const fs = require('fs')
-let results = []
 const csvtojson = require("csvtojson");
+const filePath = path.join(__dirname,"Attendancedata.csv")
+const worker = fs.readFileSync(filePath,'utf-8').split('\r\n')
+
+let results = []
 
 
 
 console.log(results)
 
 app.set("view engine", "ejs");
+
+app.set('views', __dirname + '/views');
+app.engine('html', require('ejs').renderFile);
 
 app.use(express.static('public'));
 // app.use(express.static(__dirname + "/public"));
@@ -41,6 +50,7 @@ Department : String,
 Previous_comp : String,
 experience : Number,
 bond_for_days : Number,
+Attendance : Number,
 image: String
 })
 
@@ -72,10 +82,18 @@ const upload = multer({
     },
 });
 
+
+
+
+
 app.get('/addworker',(req,res)=>{
     res.render("mean");
 
 })
+
+app.get('/Home', (req, res)=>{
+    res.sendFile(__dirname + "/views/Home.html");
+});
 
 app.post('/post', upload.single('file') ,(req, res)=>{
     var imageFile = req.file.filename;
@@ -90,7 +108,9 @@ app.post('/post', upload.single('file') ,(req, res)=>{
         Previous_comp :  req.body.Previous_comp,
         experience : req.body.experience,
         bond_for_days : req.body.bond_for_days,
-        image : imageFile
+        Attedance:0,
+        image : imageFile,
+
 
     });
     blog.save((err,doc)=>{
@@ -125,29 +145,63 @@ app.get("/getDataForWorker",  (req,res)=>{
 })
 
 
+// app.get("/deleteWorkerData/:ID",  (req,res)=>{
+//     name_of_worker = req.params.ID
+//     worker.splice(name_of_worker,1)
+//     const newData = worker.join('\r\n')
+//     fs.writeFileSync(filePath,newData,{encoding: 'utf-8'})
+//     console.log(name_of_worker)
+
+// })
+
+
+
+
+
+
+// app.get("/getAttendanceData",  (req,res)=>{
+  
+//     fs.createReadStream('Attendancedata.csv').pipe(csv({}))
+//     .on('data',(data)=> results.push(data))
+//     .on('end',()=>{
+//         res.render('showAttendance',{
+//             dataList : results
+//         }) 
+//         console.log(results)
+//         results.length = 0
+ 
+//     })
+// })
+
 app.get("/getAttendanceData",  (req,res)=>{
   
-    fs.createReadStream('Attendancedata.csv').pipe(csv({}))
-    .on('data',(data)=> results.push(data))
-    .on('end',()=>{
+    wallpapermodel.find({}, (err,data)=>{
         res.render('showAttendance',{
-            dataList : results
-        }) 
-        results.length = 0
- 
-    })
-})
-
-app.get("/deleteData/:Name",(req,res)=>{
-    email_find = req.params.Name
-    wallpapermodel.find({email : email_find}, (err,data)=>{
-        res.render('see_detail',{
             dataList : data
         })
     })
 })
+// app.get("/update/:name",(req,res)=>{
+//     email_find = req.params.name
+//     wallpapermodel.find({fname : email_find}, (err,data)=>{
+//         res.send(data)
+//         })
+//     })
 
 
+app.get("/update/:name",(req,res)=>{
+    email_find = req.params.name
+    console.log(email_find)
+    var myquery = { fname: email_find };
+    var newvalues = { $inc: {Attendance:1}};
+   
+    wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
+        if (err) throw err;
+        console.log("1 document updated");
+       
+      });
+    
+})
 
 
 
