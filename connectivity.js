@@ -2,7 +2,7 @@
 require("dotenv").config();
 
 const path = require("path")
-
+let alert = require('alert'); 
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
@@ -14,6 +14,7 @@ const fs = require('fs')
 const csvtojson = require("csvtojson");
 const filePath = path.join(__dirname,"Attendancedata.csv")
 const worker = fs.readFileSync(filePath,'utf-8').split('\r\n')
+var bodyParser = require('body-parser');
 
 let results = []
 
@@ -26,9 +27,13 @@ app.set("view engine", "ejs");
 app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').renderFile);
 
+
+
 app.use(express.static('public'));
 // app.use(express.static(__dirname + "/public"));
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 
 var router = express.Router();
@@ -66,12 +71,22 @@ const attendanceschema = new mongoose.Schema({
 
 const attendanceModel = mongoose.model("newmodel",attendanceschema)
 
+
+const Adminschema = new mongoose.Schema({
+    Admin : String,
+    Pass : String
+})
+
+const AdminModel = mongoose.model("adminmodel",Adminschema)
+
+
+
 const storage = multer.diskStorage({
-    destination:"./public/upload/",
+    destination:"public/Images_of_students",
     
 
     filename: function(request, file, callback){
-        callback(null, Date.now() + file.originalname);
+        callback(null, file.originalname);
     },
 });
 
@@ -95,6 +110,14 @@ app.get('/Home', (req, res)=>{
     res.sendFile(__dirname + "/views/Home.html");
 });
 
+app.get('/Admin', (req, res)=>{
+    res.sendFile(__dirname + "/views/admin_login.html");
+});
+
+
+
+
+
 app.post('/post', upload.single('file') ,(req, res)=>{
     var imageFile = req.file.filename;
     var success = req.file.fieldname+ "uploaded succesfully";
@@ -108,7 +131,7 @@ app.post('/post', upload.single('file') ,(req, res)=>{
         Previous_comp :  req.body.Previous_comp,
         experience : req.body.experience,
         bond_for_days : req.body.bond_for_days,
-        Attedance:0,
+        Attendance:0,
         image : imageFile,
 
 
@@ -123,6 +146,25 @@ app.post('/post', upload.single('file') ,(req, res)=>{
 
 
 
+app.post('/Adminpost',(req, res)=>{
+
+    AdminModel.find({ $and :[{Admin: req.body.Admin},{ Pass: req.body.Pass}]},(err,data)=>{
+        if(data.length > 0){
+            res.redirect("http://localhost:8080/getAttendanceDataForAdmin");
+
+        }
+        if(data.length == 0){
+            alert("Invalid Credentials")
+            res.redirect("http://localhost:8080/Admin");
+
+        }
+      
+    })
+   
+
+})
+
+
 
 
 app.get("/seedetail/:email",(req,res)=>{
@@ -134,6 +176,15 @@ app.get("/seedetail/:email",(req,res)=>{
     })
 })
 
+
+app.get("/delete/:fname",(req,res)=>{
+    email_find = req.params.fname;
+
+    console.log(email_find)
+    wallpapermodel.deleteOne({fname : email_find}, (err,data)=>{
+        res.redirect("http://localhost:8080/getAttendanceDataForAdmin")
+    })
+})
 
 
 app.get("/getDataForWorker",  (req,res)=>{
@@ -177,6 +228,15 @@ app.get("/getAttendanceData",  (req,res)=>{
   
     wallpapermodel.find({}, (err,data)=>{
         res.render('showAttendance',{
+            dataList : data
+        })
+    })
+})
+
+app.get("/getAttendanceDataForAdmin",  (req,res)=>{
+  
+    wallpapermodel.find({}, (err,data)=>{
+        res.render('data_delte_update',{
             dataList : data
         })
     })
