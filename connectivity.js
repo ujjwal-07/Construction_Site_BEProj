@@ -340,7 +340,7 @@ app.get("/update_table",  (req,res)=>{
 //     })
 
 
-app.get("/update/:name",(req,res)=>{
+app.get("/update_it/:name",(req,res)=>{
     email_find = req.params.name
     console.log(email_find)
     var myquery = { fname: email_find };

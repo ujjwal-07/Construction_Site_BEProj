@@ -63,9 +63,9 @@ def markAttendance(name):
     #             for row in csvreader:
     #                 # update the value in the desired column
     #                 if row[col_index2] == name:
-                        url = "http://localhost:8080/update/"+name 
+                        url = "http://localhost:8080/update_it/"+name 
                         webbrowser.open_new_tab(url)   
-                        return "http://localhost:8080/update/"+name
+                        return "http://localhost:8080/update_it/"+name
                     #     print("Nmaeee is thiss",name)
                     #     row[col_index] = int(row[col_index]) + 1
                     # # add the updated row to the list
