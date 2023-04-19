@@ -13,7 +13,8 @@
     <title>Workers Data</title>
 </head>
 <body>
-    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+  <div id="nav">
+    <nav class="navbar navbar-dark bg-dark"  style="background-color: #e3f2fd;">
     
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -51,6 +52,7 @@
           </ul>
         
             </nav>
+          </div>
             <br><br>
 
 
@@ -68,18 +70,19 @@
 
 
 
-
+           <strong><center><header><h1>Worker Data</h1></header></center></strong>
+          <strong> <hr class="new5"></strong>
 
             <%dataList.forEach(data =>{%>
               <!-- <div class="row"> -->
                 <div class="column">
                   <div class="card">
-                    <img class="card-img-top" src="/upload/<%=  data.image %>" alt="Card image cap">
-                    <h5 class="card-title"> Name : <br> <%= data.fname %>   <%= data.lname %> </h5>
-                    <h5 class="card-title">Phone Number : <br> <%= data.phone %></h5>
-                    <h5 class="card-title">Email Address : <br> <%= data.email %></h5>
-                    <h5 class="card-title">Department : <br> <%= data.Department %></h5>
-                    <a style="color: white;" href="/seedetail/<%= data.email %>"> <button   style="border-collapse: collapse; color: white;" class="btn btn-success">See Details</button></a>
+                    <center><h3><%= data.empID %> </h3></center>
+                    <img  src="/Images_of_students/<%=  data.image %>" alt="Card image cap">
+                    <h5 class="card-title"> <br> <%= data.fname %>   <%= data.lname %> </h5>
+                    <span> <%= data.Department %></span><br>
+                    <!-- <h5 class="card-title"><br></h5> -->
+                    <a style="color: white;" href="/seedetail/<%= data.empID %>"> <button   style="border-collapse: collapse; color: white;" class="btn btn-success">See Details</button></a>
 
                     <!-- <button  class="btn btn-success"><a href="/seedetail/<%= data.email %>">See Details</a><br><br></button> -->
 
@@ -128,12 +131,25 @@
 }
 
 body {
+  height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
+  background-image: url("/upload/pexels-joão-jesus-925743.jpg");
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  /* display: flex; */
 }
 
-img{
-  height: 300px;
+/* #nav{
+  height: 100%;
   width: 300px;
+  background-color: #343a40;
+} */
+
+img{
+  height: 250px;
+  width: 250px;
+  border-radius: 50%;
 }
 
 /* Float four columns side by side */
@@ -164,12 +180,21 @@ img{
 
 /* Style the counter cards */
 .card {
-  height: 600px;
+  height: 500px;
   width: 300px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 4px 8px 0 rgba(183, 183, 183, 0.2); */
   padding: 16px;
   text-align: center;
-  background-color: #f1f1f1;
+  background-color: transparent;
+}
+
+.card:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
+
+hr.new5 {
+  border: 3px solid black;
+  border-radius: 5px;
 }
 
 

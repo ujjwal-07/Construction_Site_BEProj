@@ -39,59 +39,59 @@ def findEncodings(images):
     return encodeList
 
 def markAttendance(name):
-    with open('Attendancedata.csv','r+') as f:
-        DataList = f.readlines()
-        nameList = []
-        for line in DataList:
-            entry = line.split(',')
-            nameList.append(entry[0])
-            print(nameList,"nameList")
-        if name in nameList:
-            with open('Attendancedata.csv', 'r') as csvfile:
-                # create a CSV reader object
-                csvreader = csv.reader(csvfile)
+    # with open('Attendancedata.csv','r+') as f:
+    #     DataList = f.readlines()
+    #     nameList = []
+    #     for line in DataList:
+    #         entry = line.split(',')
+    #         nameList.append(entry[0])
+    #         print(nameList,"nameList")
+    #     if name in nameList:
+    #         with open('Attendancedata.csv', 'r') as csvfile:
+    #             # create a CSV reader object
+    #             csvreader = csv.reader(csvfile)
 
-                # get the header row and find the column index to update
-                header = next(csvreader)
-                col_index = header.index('Attendance')
-                col_index2 = header.index('Name')
+    #             # get the header row and find the column index to update
+    #             header = next(csvreader)
+    #             col_index = header.index('Attendance')
+    #             col_index2 = header.index('Name')
 
-                # create a list to store the updated rows
-                updated_rows = []
+    #             # create a list to store the updated rows
+    #             updated_rows = []
                 
-                # loop through each row in the CSV file
-                for row in csvreader:
-                    # update the value in the desired column
-                    if row[col_index2] == name:
+    #             # loop through each row in the CSV file
+    #             for row in csvreader:
+    #                 # update the value in the desired column
+    #                 if row[col_index2] == name:
                         url = "http://localhost:8080/update/"+name 
                         webbrowser.open_new_tab(url)   
-                        # return "http://localhost:8080/update/"+name
-                        print("Nmaeee is thiss",name)
-                        row[col_index] = int(row[col_index]) + 1
-                    # add the updated row to the list
-                    updated_rows.append(row)
+                        return "http://localhost:8080/update/"+name
+                    #     print("Nmaeee is thiss",name)
+                    #     row[col_index] = int(row[col_index]) + 1
+                    # # add the updated row to the list
+                    # updated_rows.append(row)
 
             # open the same CSV file in write mode to update its contents
-            with open('Attendancedata.csv', 'w', newline='') as csvfile:
-                # create a CSV writer object
-                csvwriter = csv.writer(csvfile)
+#             with open('Attendancedata.csv', 'w', newline='') as csvfile:
+#                 # create a CSV writer object
+#                 csvwriter = csv.writer(csvfile)
 
-                # write the header row
-                csvwriter.writerow(header)
+#                 # write the header row
+#                 csvwriter.writerow(header)
 
-                # write the updated rows
-                csvwriter.writerows(updated_rows)
+#                 # write the updated rows
+#                 csvwriter.writerows(updated_rows)
 
-                return
+#                 return
 
 
-        if name not in nameList:
-            now = datetime.now()
-            date_today = date.today()
-            dtstring = now.strftime('%H:%M:%S')
-#
-#
-            f.writelines(f'\n{name},{dtstring},{date_today},0')
+#         if name not in nameList:
+#             now = datetime.now()
+#             date_today = date.today()
+#             dtstring = now.strftime('%H:%M:%S')
+# #
+# #
+#             f.writelines(f'\n{name},{dtstring},{date_today},0')
 
 
 

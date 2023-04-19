@@ -14,10 +14,13 @@ const fs = require('fs')
 const csvtojson = require("csvtojson");
 const filePath = path.join(__dirname,"Attendancedata.csv")
 const worker = fs.readFileSync(filePath,'utf-8').split('\r\n')
+const bcrypt = require("bcrypt")
+
 var bodyParser = require('body-parser');
 
-let results = []
 
+let results = []
+const users = [] 
 
 
 console.log(results)
@@ -34,6 +37,7 @@ app.use(express.static('public'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: true}));
 
 
 var router = express.Router();
@@ -49,13 +53,14 @@ mongoose.connect(mongoDB).then(()=>{
 const uploadWallpaperschema = new mongoose.Schema({
 fname : String,
 lname : String,
+birthDate : String,
 phone : Number,
-email : String,
 Department : String,
 Previous_comp : String,
 experience : Number,
 bond_for_days : Number,
 Attendance : Number,
+empID: String,
 image: String
 })
 
@@ -86,7 +91,7 @@ const storage = multer.diskStorage({
     
 
     filename: function(request, file, callback){
-        callback(null, file.originalname);
+        callback(null, file.originalname.toUpperCase());
     },
 });
 
@@ -110,6 +115,9 @@ app.get('/Home', (req, res)=>{
     res.sendFile(__dirname + "/views/Home.html");
 });
 
+app.get('/Admin_Home', (req, res)=>{
+    res.sendFile(__dirname + "/views/admin_HomePage.html");
+});
 app.get('/Admin', (req, res)=>{
     res.sendFile(__dirname + "/views/admin_login.html");
 });
@@ -118,39 +126,71 @@ app.get('/Admin', (req, res)=>{
 
 
 
-app.post('/post', upload.single('file') ,(req, res)=>{
-    var imageFile = req.file.filename;
-    var success = req.file.fieldname+ "uploaded succesfully";
 
+
+app.post('/post', upload.single('file') ,(req, res)=>{
+    var imageFile = req.file.filename.toUpperCase();
+    var success = req.file.fieldname+ "uploaded succesfully";
+    var empID_find = req.body.Department[0]+"-"+req.body.fname[0].toUpperCase()+req.body.lname[0].toUpperCase()+req.body.birthDate.slice(-4)
+
+    wallpapermodel.find({empID : empID_find}, (err,data)=>{
+        if(data.length > 0){
+            alert("Worker Data Already Present")
+            res.redirect("http://localhost:8080/addworker")
+        }
+    else{
     var blog = new wallpapermodel({
-        fname: req.body.fname,
-        lname: req.body.lname,
+        fname: req.body.fname.toUpperCase(),
+        lname: req.body.lname.toUpperCase(),
+        birthDate: req.body.birthDate,
         phone: req.body.phone,
-        email : req.body.email,
         Department : req.body.Department,
         Previous_comp :  req.body.Previous_comp,
         experience : req.body.experience,
         bond_for_days : req.body.bond_for_days,
         Attendance:0,
+        empID: req.body.Department[0]+"-"+req.body.fname[0].toUpperCase()+req.body.lname[0].toUpperCase()+req.body.birthDate.slice(-4),
         image : imageFile,
 
 
     });
+    var img = imageFile.split(".")
+    if(req.body.fname.toUpperCase() === img[0]){
+        console.log(req.body.fname.toUpperCase() , img[0])
     blog.save((err,doc)=>{
         if (err) throw err;
     });
     res.redirect("http://localhost:8080/getDataForWorker");
+    }
+    else{
+        console.log(req.body.fname.toUpperCase() , img)
+        alert("Name of the file is not same as first name")
+        res.redirect("http://localhost:8080/addworker");
 
+    }
+}
+})
 })
 
 
 
 
-app.post('/Adminpost',(req, res)=>{
-
+app.post('/Adminpost',async(req, res)=>{
+    // try{
+    // const hashedpass = await bcrypt.hash(req.body.Password,10)
+    // const user = {Admin: req.body.Admin, Pass: hashedpass}
+    // users.push(user)
+    // console.log(users)
+    // res.status(201).send()
+    // }catch{
+    //     res.send(500).send()
+    // }
+    // console.log(users)
     AdminModel.find({ $and :[{Admin: req.body.Admin},{ Pass: req.body.Pass}]},(err,data)=>{
         if(data.length > 0){
-            res.redirect("http://localhost:8080/getAttendanceDataForAdmin");
+            res.redirect("http://localhost:8080/Admin_Home");
+
+            // res.redirect("http://localhost:8080/getAttendanceDataForAdmin");
 
         }
         if(data.length == 0){
@@ -160,6 +200,11 @@ app.post('/Adminpost',(req, res)=>{
         }
       
     })
+    // AdminModel.find({Admin: req.body.Admin},(err,data)=>{
+    //     if(data.length > 0){
+    //         console.log(data)
+    //     }
+    // })
    
 
 })
@@ -167,15 +212,51 @@ app.post('/Adminpost',(req, res)=>{
 
 
 
-app.get("/seedetail/:email",(req,res)=>{
-    email_find = req.params.email
-    wallpapermodel.find({email : email_find}, (err,data)=>{
+app.get("/seedetail/:empID",(req,res)=>{
+    empID_data = req.params.empID
+    wallpapermodel.find({empID : empID_data}, (err,data)=>{
         res.render('see_detail',{
             dataList : data
         })
     })
 })
 
+app.get('/prac/:empID', (req, res)=>{
+    console.log(req.body)
+    empID_data = req.params.empID
+    wallpapermodel.find({empID : empID_data}, (err,data)=>{
+        res.render('practice',{
+            dataList : data
+        })
+    })
+});
+
+
+app.post("/update_tablettendance",(req,res)=>{
+    console.log(req.body);
+    empID_data = req.body.empID;  
+    console.log(req.body)
+    var myquery = { empID: empID_data };
+    var newvalues = { $set: {phone: req.body.phone, Department: req.body.Department, experience: req.body.experience,bond_for_days:req.body.bond_for_days}};
+   
+    wallpapermodel.updateMany(myquery, newvalues, function(err, res) {
+        if (err) throw err;
+        console.log("1 document updated");
+      });
+      res.redirect("http://localhost:8080/update_table")
+
+})
+
+
+
+app.get("/update/:empID",(req,res)=>{
+    empID_data = req.params.empID
+    wallpapermodel.find({empID : empID_data}, (err,data)=>{
+        res.render('update_form',{
+            dataList : data
+        })
+    })
+})
 
 app.get("/delete/:fname",(req,res)=>{
     email_find = req.params.fname;
@@ -241,6 +322,16 @@ app.get("/getAttendanceDataForAdmin",  (req,res)=>{
         })
     })
 })
+
+app.get("/update_table",  (req,res)=>{
+  
+    wallpapermodel.find({}, (err,data)=>{
+        res.render('update_table',{
+            dataList : data
+        })
+    })
+})
+
 // app.get("/update/:name",(req,res)=>{
 //     email_find = req.params.name
 //     wallpapermodel.find({fname : email_find}, (err,data)=>{
@@ -262,6 +353,22 @@ app.get("/update/:name",(req,res)=>{
       });
     
 })
+
+
+app.post("/updated_data_post",(req,res)=>{
+    empID_data = "P-RS1996"   
+    console.log(req.body)
+    var myquery = { empID: empID_data };
+    var newvalues = { $set: {phone: req.body.phone, Department: req.body.Department, experience: req.body.experience,bond_for_days:req.body.bond_for_days}};
+   
+    wallpapermodel.updateMany(myquery, newvalues, function(err, res) {
+        if (err) throw err;
+        console.log("1 document updated");
+      });
+      res.redirect("http://localhost:8080/update_table")
+
+})
+
 
 
 

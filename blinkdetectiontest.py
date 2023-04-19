@@ -2,8 +2,11 @@
 import cv2
 import dlib
 import math
-BLINK_RATIO_THRESHOLD = 5.7
+import random
 
+BLINK_RATIO_THRESHOLD = 5.7
+num1 = random.randint(1, 10)
+count = 0
 #-----Step 5: Getting to know blink ratio
 
 def midpoint(point1 ,point2):
@@ -62,7 +65,8 @@ while True:
 
     #-----Step 2: converting image to grayscale-----
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
+    cv2.putText(frame,"Blink for  "+str(num1)+"  times",(10,50), cv2.FONT_HERSHEY_DUPLEX,
+                        1,(000,000,000),2,cv2.LINE_AA)
     #-----Step 3: Face detection with dlib-----
     #detecting faces in the frame 
     faces,_,_ = detector.run(image = frame, upsample_num_times = 0, 
@@ -81,9 +85,13 @@ while True:
         if blink_ratio > BLINK_RATIO_THRESHOLD:
             #Blink detected! Do Something!
             print("detection Passed")
-            cv2.putText(frame,"BLINKING",(10,50), cv2.FONT_HERSHEY_SIMPLEX,
-                        2,(000,000,000),2,cv2.LINE_AA)
-
+            count+=1
+            print(count)
+            cv2.putText(frame,"BLINKING",(10,100), cv2.FONT_HERSHEY_SIMPLEX,
+                        1,(000,000,000),2,cv2.LINE_AA)
+            if count == num1:
+                cap.release()
+                cv2.destroyAllWindows()
     cv2.imshow('BlinkDetector', frame)
     key = cv2.waitKey(1)
     if key == 27:
@@ -92,3 +100,4 @@ while True:
 #releasing the VideoCapture object
 cap.release()
 cv2.destroyAllWindows()
+

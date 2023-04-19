@@ -1,0 +1,11 @@
+Post http://localhost:8080/Adminpost
+Content-Type: application/json
+
+{
+    "Admin":"Admin",
+    "Password" :"556"
+}
+
+###
+
+GET http://localhost:8080/Adminpost

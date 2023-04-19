@@ -1,0 +1,80 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<%dataList.forEach(data =>{%>
+<div class="container">
+<center>  <button type="button" class="btn btn-outline-dark">Updating data of <%= data.empID %></button></center>
+
+  <form action="http://localhost:8080/update_tablettendance" method="post">
+  
+    <div class="form-row">
+      <div class="col-md-6 mb-3">
+        <label for="validationCustom03">Phone Number</label>
+        <input type="text" class="form-control" id="validationCustom03" placeholder="Phone Number" name="phone">
+      </div>
+      <div class="col-md-3 mb-3">
+        <label for="validationCustom04">Experience</label>
+        <input type="text" class="form-control" id="validationCustom04" placeholder="experience" name="experience" >
+      </div>
+      <div class="col-md-3 mb-3">
+      <label for="validationCustom05">Choose Department</label><br>
+      <select class="custom-select" name="Department" id="dep" style="width: 150px;">
+        <option value="Carpenter">Carpenter</option>
+        <option value="Plumber">Plumber</option>
+        <option value="Electrician">Electrician</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="col-md-6 mb-3">
+        <label for="validationCustom04">Bond</label>
+        <input type="text" class="form-control" id="validationCustom04" placeholder="bond" name="bond_for_days"  required>
+      </div>
+      <div class="col-md-6 mb-3">
+        <span>Confirm the EMP_ID</span>
+        <label for="validationCustom04">EMPID</label>
+        <input type="text" class="form-control" id="validationCustom04" placeholder="bond" name="empID" value="<%= data.empID %>">
+      </div>
+      <center>  <button class="btn btn-primary" type="submit">Submit form</button></center>
+
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+  <input type="text" name="phone" id="">
+  <input type="text" name="experience" value="5">
+  <input type="text" name="empID" value= "<%= data.empID %>">
+  <select class="custom-select" name="Department" id="dep" style="width: 150px;">
+    <option value="Carpenter">Carpenter</option>
+    <option value="Plumber">Plumber</option>
+    <option value="Electrician">Electrician</option>
+
+  </select>
+  <input type="text" name="bond_for_days">
+
+  <button type="submit">Take Attendance</button>
+</form> -->
+
+       <%})%>
+
+      
+<style>
+    .container{
+      width: 900px;
+      margin: auto;
+ 
+  /* border: 3px solid green; */
+  padding: 10px;
+    }
+</style>
