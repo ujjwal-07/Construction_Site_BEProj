@@ -135,7 +135,8 @@ app.post('/post', upload.single('file') ,(req, res)=>{
     var success = req.file.fieldname+ "uploaded succesfully";
     var empID_find = req.body.Department[0]+"-"+req.body.fname[0].toUpperCase()+req.body.lname[0].toUpperCase()+req.body.birthDate.slice(-4)
     var ext = imageFile.split(".")
-    var image_emp_name = empID_find+"."+ext[1]
+    ext = ext[1].toLocaleLowerCase()
+    var image_emp_name = empID_find+"."+ext
     console.log(imageFile)
     console.log(image_emp_name);
     fs.rename(`public/Images_of_students/${imageFile}`, `public/Images_of_students/${image_emp_name}`,  (error) => {
@@ -381,7 +382,7 @@ app.get("/update_table",  (req,res)=>{
 app.get("/update_it/:name",(req,res)=>{
     email_find = req.params.name
     console.log(email_find)
-    var myquery = { fname: email_find };
+    var myquery = { empID: email_find };
     var newvalues = { $inc: {Attendance:1}};
    
     wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
