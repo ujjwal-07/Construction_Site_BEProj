@@ -122,8 +122,9 @@ app.get('/Admin', (req, res)=>{
     res.sendFile(__dirname + "/views/admin_login.html");
 });
 
-
-
+app.get('/add_Admin',(req,res)=>{
+    res.sendFile(__dirname + "/views/add_Admin.html");
+})
 
 
 
@@ -172,6 +173,25 @@ app.post('/post', upload.single('file') ,(req, res)=>{
 })
 })
 
+app.post('/add_newAdmindata',(req,res)=>{
+    AdminModel.find({Admin : req.body.Admin}, (err,data)=>{
+        if(data.length > 0){
+            alert("Admin is already present");
+            res.redirect('http://localhost:8080/add_Admin#');
+        }else{
+            var new_admin = new AdminModel({
+                Admin :  req.body.Admin,
+                Pass : req.body.Pass
+            })
+            new_admin.save((err,doc)=>{
+                if (err) throw err;
+            });
+            res.redirect('http://localhost:8080/Admin');
+        }
+    }
+)
+
+})
 
 
 
