@@ -17,6 +17,7 @@ const worker = fs.readFileSync(filePath,'utf-8').split('\r\n')
 const bcrypt = require("bcrypt")
 
 var bodyParser = require('body-parser');
+const { name } = require("ejs");
 
 
 let results = []
@@ -61,6 +62,7 @@ experience : Number,
 bond_for_days : Number,
 Attendance : Number,
 empID: String,
+Date:String,
 image: String
 })
 
@@ -380,16 +382,46 @@ app.get("/update_table",  (req,res)=>{
 
 
 app.get("/update_it/:name",(req,res)=>{
-    email_find = req.params.name
+    split_it = req.params.name.split(".")
+    email_find = split_it[0]
+    var date = split_it[1]
+    var date_add = ''
     console.log(email_find)
-    var myquery = { empID: email_find };
-    var newvalues = { $inc: {Attendance:1}};
-   
-    wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
-        if (err) throw err;
-        console.log("1 document updated");
-       
-      });
+    wallpapermodel.find({empID:email_find}, (err,data)=>{
+        if(err) throw err;
+        if(data.length >0){
+            console.log(data+"it is the data")
+            // dataa = JSON.parse(data)
+            
+        //    var str_date = data.Date.split(',');
+        //    console.log(str_date)
+        //    date_add = data.Date
+        //    if(date in str_date)
+        //    {
+        //     alert("Attendance already taken")
+        //    }
+        //    else{
+            // date_add += data.Date+","+date
+            var myquery = { empID: email_find };
+            var newvalues = { $set: {Date:date}};
+           
+            wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
+                if (err) throw err;
+                console.log("1 document updated");
+               
+              });
+
+            var newvalues = { $inc: {Attendance:1}};
+           
+            wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
+                if (err) throw err;
+                console.log("1 document updated");
+               
+              });
+           }
+        // }
+    })
+    
     
 })
 

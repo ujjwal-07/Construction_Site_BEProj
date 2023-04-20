@@ -39,6 +39,7 @@ def findEncodings(images):
     return encodeList
 
 def markAttendance(name):
+
     # with open('Attendancedata.csv','r+') as f:
     #     DataList = f.readlines()
     #     nameList = []
@@ -63,9 +64,10 @@ def markAttendance(name):
     #             for row in csvreader:
     #                 # update the value in the desired column
     #                 if row[col_index2] == name:
-                        url = "http://localhost:8080/update_it/"+name 
+                        today = date.today()
+                        url = "http://localhost:8080/update_it/"+name+"."+str(today) 
                         webbrowser.open_new_tab(url)   
-                        return "http://localhost:8080/update_it/"+name
+                        url = "http://localhost:8080/update_it/"+name+"."+str(today)
                     #     print("Nmaeee is thiss",name)
                     #     row[col_index] = int(row[col_index]) + 1
                     # # add the updated row to the list
