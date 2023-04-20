@@ -27,11 +27,11 @@
   <div class="form-row">
     <div class="col-md-4 mb-3">
       <label for="validationCustom01">First name</label>
-      <input type="text" class="form-control" id="validationCustom01" placeholder="First name" value="Mark" name="fname" required>
+      <input type="text" class="form-control" id="validationCustom01" placeholder="First name"  name="fname" required>
     </div>
     <div class="col-md-4 mb-3">
       <label for="validationCustom02">Last name</label>
-      <input type="text" class="form-control" id="validationCustom02" placeholder="Last name" value="Otto" name="lname" required>
+      <input type="text" class="form-control" id="validationCustom02" placeholder="Last name" value="" name="lname" required>
 
     </div>
     <div class="col-md-4 mb-3">
@@ -62,18 +62,10 @@
   <div class="form-row">
     <div class="col-md-6 mb-3">
       <label for="validationCustom03">Phone Number</label>
-      <input type="text" class="form-control" id="validationCustom03" placeholder="Phone Number" name="phone" required>
-      <div class="invalid-feedback">
-        Please provide a valid Phone Number.
-      </div>
+      <input type="text" class="form-control" id="phone" placeholder="Phone Number" onblur="validate()" name="phone" required>
+      <span class="error" id="lblError2"></span>
     </div>
-    <div class="col-md-3 mb-3">
-      <label for="validationCustom04">E-Mail</label>
-      <input type="text" class="form-control" id="validationCustom04" placeholder="E-mail" name="email" required>
-      <div class="invalid-feedback">
-        Please provide a valid E-mail ID.
-      </div>
-    </div>
+    
     <div class="col-md-3 mb-3">
       <label for="validationCustom05">Choose Department</label><br>
       <select class="custom-select" name="Department" id="dep" style="width: 150px;">
@@ -107,7 +99,7 @@
     </div>
   
 </div>
-<center>  <button class="btn btn-primary" type="button" id="btnValidate" value="Validate" onclick="return ValidateDOB()">Submit form</button></center>
+<center>  <button class="btn btn-primary" type="button" id="btnValidate" value="Validate" onclick=" validate()">Submit form</button></center>
 </form>
 
   </div>
@@ -173,7 +165,23 @@
     }
 
 
+function validate()
+{
+  var text = document.getElementById('phone').value;
+  var lblError2 = document.getElementById("lblError2");
+  var btn = document.getElementById('btnValidate')
 
+  var regx = /^[6-9]\d{9}$/ ;
+  if(regx.test(text)){
+  lblError2.innerHTML = "Valid Number"
+  btn.type = "submit"
+  }
+  else{
+  lblError2.innerHTML = "Invalid Number."
+  btn.type = "button"
+
+  }
+}
 
 
 

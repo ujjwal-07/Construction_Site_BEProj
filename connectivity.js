@@ -129,11 +129,29 @@ app.get('/add_Admin',(req,res)=>{
 
 
 
+
 app.post('/post', upload.single('file') ,(req, res)=>{
     var imageFile = req.file.filename.toUpperCase();
     var success = req.file.fieldname+ "uploaded succesfully";
     var empID_find = req.body.Department[0]+"-"+req.body.fname[0].toUpperCase()+req.body.lname[0].toUpperCase()+req.body.birthDate.slice(-4)
-
+    var ext = imageFile.split(".")
+    var image_emp_name = empID_find+"."+ext[1]
+    console.log(imageFile)
+    console.log(image_emp_name);
+    fs.rename(`public/Images_of_students/${imageFile}`, `public/Images_of_students/${image_emp_name}`,  (error) => {
+        if (error) {
+            
+          // Show the error 
+          console.log(error);
+        }
+        else {
+        
+          // List all the filenames after renaming
+          console.log("\nFile Renamed\n");
+         
+          // List all the filenames after renaming
+        }
+    });
     wallpapermodel.find({empID : empID_find}, (err,data)=>{
         if(data.length > 0){
             alert("Worker Data Already Present")
@@ -151,7 +169,7 @@ app.post('/post', upload.single('file') ,(req, res)=>{
         bond_for_days : req.body.bond_for_days,
         Attendance:0,
         empID: req.body.Department[0]+"-"+req.body.fname[0].toUpperCase()+req.body.lname[0].toUpperCase()+req.body.birthDate.slice(-4),
-        image : imageFile,
+        image : image_emp_name,
 
 
     });
