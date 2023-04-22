@@ -64,6 +64,7 @@ bond_for_days : Number,
 Attendance : Number,
 empID: String,
 Date:String,
+Time: String,
 image: String
 })
 
@@ -174,6 +175,7 @@ app.post('/post', upload.single('file') ,(req, res)=>{
         Attendance:0,
         empID: req.body.Department[0]+"-"+req.body.fname[0].toUpperCase()+req.body.lname[0].toUpperCase()+req.body.birthDate.slice(-4),
         Date : ' ',
+        Time:' ',
         image : image_emp_name,
 
 
@@ -389,10 +391,18 @@ app.get("/update_it/:name",(req,res)=>{
     let date_time = new Date(ts);
     let datee = date_time.getDate();
     let month = date_time.getMonth() + 1;
-let year = date_time.getFullYear();
-let date =  year +"-"+month+"-"+datee
+    let year = date_time.getFullYear();
+    let date =  year +"-"+month+"-"+datee
+        // current hours
+    let hours = date_time.getHours();
+
+    // current minutes
+    let minutes = date_time.getMinutes();
+
+    let time = hours+":"+minutes
     console.log(date)
     var date_add = ''
+    var time_add = ''
     wallpapermodel.find({empID:EmailID}, (err,data)=>{
         if(err) throw err;
         if(data.length >0){
@@ -402,7 +412,8 @@ let date =  year +"-"+month+"-"+datee
             console.log(s.length)
         if(data[0].Date !== null){
            var str_date = data[0].Date.split(',');
-           console.log(str_date)
+           var time_str = data[0].Time.split(',')
+           console.log(str_date,time_str)
            if(str_date.includes(date) === true)
            {
             alert('Attendance already taken')
@@ -411,8 +422,9 @@ let date =  year +"-"+month+"-"+datee
            }
            else{
             date_add = data[0].Date+","+date
+            time_add = data[0].Time+','+time
             var myquery = { empID: EmailID };
-            var newvalues = { $set: {Date:date_add}};
+            var newvalues = { $set: {Date:date_add,Time: time_add}};
            
             wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
                 if (err) throw err;
@@ -425,8 +437,10 @@ let date =  year +"-"+month+"-"+datee
             wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
                 if (err) throw err;
                 console.log("1 document updated");
-               
+
               });
+              res.redirect("http://localhost:8080/getAttendanceData")
+
            }
         }else{
             var myquery = { empID: EmailID };
@@ -435,13 +449,13 @@ let date =  year +"-"+month+"-"+datee
             wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
                 if (err) throw err;
                 console.log("1 document updated");
-               
+                res.redirect("http://localhost:8080/getAttendanceData")
+
               });
            }
            
         }
     })
-    
     
 })
 
