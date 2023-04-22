@@ -15,6 +15,7 @@ const csvtojson = require("csvtojson");
 const filePath = path.join(__dirname,"Attendancedata.csv")
 const worker = fs.readFileSync(filePath,'utf-8').split('\r\n')
 const bcrypt = require("bcrypt")
+let ts = Date.now();
 
 var bodyParser = require('body-parser');
 const { name } = require("ejs");
@@ -172,6 +173,7 @@ app.post('/post', upload.single('file') ,(req, res)=>{
         bond_for_days : req.body.bond_for_days,
         Attendance:0,
         empID: req.body.Department[0]+"-"+req.body.fname[0].toUpperCase()+req.body.lname[0].toUpperCase()+req.body.birthDate.slice(-4),
+        Date : ' ',
         image : image_emp_name,
 
 
@@ -382,28 +384,35 @@ app.get("/update_table",  (req,res)=>{
 
 
 app.get("/update_it/:name",(req,res)=>{
-    split_it = req.params.name.split(".")
-    email_find = split_it[0]
-    var date = split_it[1]
+    EmailID = req.params.name
+    console.log("update it")
+    let date_time = new Date(ts);
+    let datee = date_time.getDate();
+    let month = date_time.getMonth() + 1;
+let year = date_time.getFullYear();
+let date =  year +"-"+month+"-"+datee
+    console.log(date)
     var date_add = ''
-    console.log(email_find)
-    wallpapermodel.find({empID:email_find}, (err,data)=>{
+    wallpapermodel.find({empID:EmailID}, (err,data)=>{
         if(err) throw err;
         if(data.length >0){
-            console.log(data+"it is the data")
+            console.log(data[0].Date)
             // dataa = JSON.parse(data)
-            
-        //    var str_date = data.Date.split(',');
-        //    console.log(str_date)
-        //    date_add = data.Date
-        //    if(date in str_date)
-        //    {
-        //     alert("Attendance already taken")
-        //    }
-        //    else{
-            // date_add += data.Date+","+date
-            var myquery = { empID: email_find };
-            var newvalues = { $set: {Date:date}};
+            let s = data[0].Date
+            console.log(s.length)
+        if(data[0].Date !== null){
+           var str_date = data[0].Date.split(',');
+           console.log(str_date)
+           if(str_date.includes(date) === true)
+           {
+            alert('Attendance already taken')
+            console.log("Attendance already taken")
+            res.redirect('http://localhost:8080/getAttendanceData')
+           }
+           else{
+            date_add = data[0].Date+","+date
+            var myquery = { empID: EmailID };
+            var newvalues = { $set: {Date:date_add}};
            
             wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
                 if (err) throw err;
@@ -419,7 +428,18 @@ app.get("/update_it/:name",(req,res)=>{
                
               });
            }
-        // }
+        }else{
+            var myquery = { empID: EmailID };
+            var newvalues = { $set: {Date:date}};
+           
+            wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
+                if (err) throw err;
+                console.log("1 document updated");
+               
+              });
+           }
+           
+        }
     })
     
     

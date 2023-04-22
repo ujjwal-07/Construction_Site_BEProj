@@ -65,9 +65,10 @@ def markAttendance(name):
     #                 # update the value in the desired column
     #                 if row[col_index2] == name:
                         today = date.today()
-                        url = "http://localhost:8080/update_it/"+name+"."+str(today) 
+                        
+                        url = "http://localhost:8080/update_it/"+name
                         webbrowser.open_new_tab(url)   
-                        url = "http://localhost:8080/update_it/"+name+"."+str(today)
+                        url = "http://localhost:8080/update_it/"+name
                     #     print("Nmaeee is thiss",name)
                     #     row[col_index] = int(row[col_index]) + 1
                     # # add the updated row to the list
