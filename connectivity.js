@@ -525,7 +525,7 @@ app.get("/update_it/:name",(req,res)=>{
            }
         }else{
             var myquery = { empID: EmailID };
-            var newvalues = { $set: {Date:date}};
+            var newvalues = { $set: {Date:date},$inc: {Attendance:1}};
            
             wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
                 if (err) throw err;
@@ -537,7 +537,7 @@ app.get("/update_it/:name",(req,res)=>{
            
         }else{
             var myquery = { empID: EmailID };
-            var newvalues = { $set: {Time:time}};
+            var newvalues = { $set: {Time:time,Date:date},$inc: {Attendance:1}};
            
             wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
                 if (err) throw err;
@@ -732,6 +732,18 @@ app.post("/add", async (req,res)=>{
     });
 });
 
+
+app.get("/attendance_data",(req,res)=>{
+    wallpapermodel.find({},(err,data)=>{
+        if (err) throw err
+        else{
+            res.render('attendance_details_admin',{ 
+                dataList : data
+            })
+        }
+
+    })
+})
 
 
 
