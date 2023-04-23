@@ -65,6 +65,7 @@ Attendance : Number,
 empID: String,
 Date:String,
 Time: String,
+PunchOut: String,
 image: String
 })
 
@@ -174,8 +175,9 @@ app.post('/post', upload.single('file') ,(req, res)=>{
         bond_for_days : req.body.bond_for_days,
         Attendance:0,
         empID: req.body.Department[0]+"-"+req.body.fname[0].toUpperCase()+req.body.lname[0].toUpperCase()+req.body.birthDate.slice(-4),
-        Date : ' ',
-        Time:' ',
+        Date : '',
+        Time:null,
+        PunchOut:null,
         image : image_emp_name,
 
 
@@ -385,6 +387,88 @@ app.get("/update_table",  (req,res)=>{
 //     })
 
 
+
+
+app.get("/punch_out_time/:name",(req,res)=>{
+
+    EmailID = req.params.name
+    console.log("update it")
+    let date_time = new Date(ts);
+
+    let hours = date_time.getHours();
+
+    // current minutes
+    let minutes = date_time.getMinutes();
+
+    let time = hours+":"+minutes
+    var time_add = ''
+    var store_index_of_date= 0
+    wallpapermodel.find({empID:EmailID}, (err,data)=>{
+        if(err) throw err;
+        if(data[0].PunchOut !== null){
+            console.log(data[0].Date)
+            // dataa = JSON.parse(data)
+            let s = data[0].Date
+            console.log(s.length)
+            var time_str = data[0].Time.split(',');
+            var end_time_str = data[0].PunchOut.split(',');
+            console.log("start",time_str, time_str.length)
+            console.log("endtime",end_time_str, end_time_str.length)
+        if(time_str.length > end_time_str.length && time_str.length !== end_time_str.length){
+           var str_date = data[0].Date.split(',');
+   
+           console.log(str_date,time_str)
+           time_add = data[0].PunchOut +","+ time
+           console.log("timeadd",time_add)
+           var myquery = { empID: EmailID };
+           var newvalues = { $set: {PunchOut: time_add}};
+          
+           wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
+               if (err) throw err;
+               console.log("1 document updated");
+              
+             });
+
+        }
+        else
+           {
+           
+            alert('Punch Out already taken')
+            console.log("Attendance already taken")
+            res.redirect('http://localhost:8080/getAttendanceData')
+           }
+        
+    }else{
+        var myquery = { empID: EmailID };
+        var newvalues = { $set: {PunchOut: time}};
+        console.log("time",time)
+
+        wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
+            if (err) throw err;
+            console.log("1 document updated");
+            
+            });
+    }
+
+           
+           
+        
+           
+        
+    
+    
+})
+
+})
+
+
+
+
+
+
+
+
+
 app.get("/update_it/:name",(req,res)=>{
     EmailID = req.params.name
     console.log("update it")
@@ -405,7 +489,7 @@ app.get("/update_it/:name",(req,res)=>{
     var time_add = ''
     wallpapermodel.find({empID:EmailID}, (err,data)=>{
         if(err) throw err;
-        if(data.length >0){
+        if(data[0].Time != null){
             console.log(data[0].Date)
             // dataa = JSON.parse(data)
             let s = data[0].Date
@@ -424,21 +508,18 @@ app.get("/update_it/:name",(req,res)=>{
             date_add = data[0].Date+","+date
             time_add = data[0].Time+','+time
             var myquery = { empID: EmailID };
-            var newvalues = { $set: {Date:date_add,Time: time_add}};
+            var newvalues = { $set: {Date:date_add,Time: time_add}, $inc: {Attendance:1}};
            
-            wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
+            wallpapermodel.update(myquery, newvalues, function(err, res) {
                 if (err) throw err;
                 console.log("1 document updated");
+                var newvalues = { $inc: {Attendance:1}};
+           
+            
                
               });
 
-            var newvalues = { $inc: {Attendance:1}};
-           
-            wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
-                if (err) throw err;
-                console.log("1 document updated");
-
-              });
+          
               res.redirect("http://localhost:8080/getAttendanceData")
 
            }
@@ -454,6 +535,17 @@ app.get("/update_it/:name",(req,res)=>{
               });
            }
            
+        }else{
+            var myquery = { empID: EmailID };
+            var newvalues = { $set: {Time:time}};
+           
+            wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
+                if (err) throw err;
+                console.log("1 document updated");
+
+              });
+              res.redirect("http://localhost:8080/getAttendanceData")
+
         }
     })
     
@@ -515,6 +607,66 @@ app.get("/getDataForElectrician",  (req,res)=>{
 
 
 // Face Detetction and Liveliness detection part
+
+app.get("/puchout", async(req, res)=>{
+    const py = spawn('python',['blinkdetectiontest.py','ujjwal'])
+    res = ''
+    py.stdout.on('data',(data)=>{
+        // console.log(data.toString());
+        res = data.toString()
+
+})
+
+py.on('open',(code)=>{
+        console.log(`stored result is  ${res}`);
+        res = "detection Passed"
+        if (res === "detection Passed"){
+            console.log("Hii")
+            const py = spawn('python',['puchoutcode.py','ujjwal'])
+    
+            py.stdout.on('data',(data)=>{
+                // console.log(data.toString());
+                res = data.toString()
+            })
+            
+        }
+        else{
+            console.log("noo");
+        }
+    
+    })
+
+
+    py.on('close',(code)=>{
+        console.log(`stored result is  ${res}`);
+        res = "detection Passed"
+        if (res === "detection Passed"){
+            console.log("Hii")
+            const py = spawn('python',['puchoutcode.py','ujjwal'])
+    
+            py.stdout.on('data',(data)=>{
+                // console.log(data.toString());
+                res = data.toString()
+            })
+            
+        }
+        else{
+            console.log("noo");
+        }
+    
+    })
+})
+
+
+
+
+
+
+
+
+
+
+
 
 app.get("/takeAttendance", async(req, res)=>{
     const py = spawn('python',['blinkdetectiontest.py','ujjwal'])
