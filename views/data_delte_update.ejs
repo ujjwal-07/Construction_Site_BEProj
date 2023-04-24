@@ -27,8 +27,9 @@
           <tr>
             <!-- <th>ID</th> -->
             <th >Name</th>
-            <!-- <th>Time</th>
-            <th>Date</th> -->
+            <th>Date</th>
+            <th>Punch-In</th>
+            <th>Punch-Out</th>
             <th>Attendance</th>
             <th>Delete</th>
 
@@ -42,11 +43,10 @@
           <tr>
             <td><%= data.fname %> <%= data.lname %></td>
           
-            <!-- <td><%= data.Attendance %></td> -->
+            <td><%= data.Date.split(",").pop() %></td>
 
-
-            <!-- <td><%= data.Time %></td>
-            <td><%= data.Date %></td> -->
+            <td><%= data.Time.split(",").pop() %></td>
+            <td><%=  data.PunchOut.split(",").pop() %></td>
             <td><%= data.Attendance %>/30</td>
             <td><a href="http://localhost:8080/delete/<%= data.fname%>"><button type="button" class="btn btn-danger">Delete</button></a>
             </td>
