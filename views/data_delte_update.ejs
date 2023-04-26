@@ -41,6 +41,8 @@
         <%dataList.forEach(data =>{%>
 
           <tr>
+            <% if(data.Date.length >0){ %>
+           
             <td><%= data.fname %> <%= data.lname %></td>
           
             <td><%= data.Date.split(",").pop() %></td>
@@ -50,6 +52,18 @@
             <td><%= data.Attendance %>/30</td>
             <td><a href="http://localhost:8080/delete/<%= data.fname%>"><button type="button" class="btn btn-danger">Delete</button></a>
             </td>
+            <% }
+            else{ %>  
+              <td><%= data.fname %> <%= data.lname %></td>
+          
+              <td><%= data.Date %></td>
+  
+              <td><%= data.Time %></td>
+              <td><%=  data.PunchOut %></td>
+              <td><%= data.Attendance %>/30</td>
+              <td><a href="http://localhost:8080/delete/<%= data.fname%>"><button type="button" class="btn btn-danger">Delete</button></a>
+              </td>
+           <% } %>
             <%})%>
         </tbody>
           </tr>

@@ -130,7 +130,9 @@ app.get('/Admin', (req, res)=>{
 app.get('/add_Admin',(req,res)=>{
     res.sendFile(__dirname + "/views/add_Admin.html");
 })
-
+app.get('/about_us',(req,res)=>{
+    res.sendFile(__dirname + "/views/about_us.html")
+})
 
 
 
@@ -188,6 +190,7 @@ app.post('/post', upload.single('file') ,(req, res)=>{
     blog.save((err,doc)=>{
         if (err) throw err;
     });
+    alert("DATA UPLODED SUCCESSFULLY")
     res.redirect("http://localhost:8080/getDataForWorker");
     }
     else{
@@ -213,6 +216,7 @@ app.post('/add_newAdmindata',(req,res)=>{
             new_admin.save((err,doc)=>{
                 if (err) throw err;
             });
+            alert("ADMIN ADDED SUCCESSFULLY")
             res.redirect('http://localhost:8080/Admin');
         }
     }
@@ -288,6 +292,7 @@ app.post("/update_tablettendance",(req,res)=>{
    
     wallpapermodel.updateMany(myquery, newvalues, function(err, res) {
         if (err) throw err;
+        alert("DATA UPDATED SUCCESSFULLY")
         console.log("1 document updated");
       });
       res.redirect("http://localhost:8080/update_table")
@@ -310,6 +315,8 @@ app.get("/delete/:fname",(req,res)=>{
 
     console.log(email_find)
     wallpapermodel.deleteOne({fname : email_find}, (err,data)=>{
+        if (err) throw err
+        alert("DATA DElETED SUCCESSFULLY")
         res.redirect("http://localhost:8080/getAttendanceDataForAdmin")
     })
 })
@@ -560,6 +567,7 @@ app.post("/updated_data_post",(req,res)=>{
    
     wallpapermodel.updateMany(myquery, newvalues, function(err, res) {
         if (err) throw err;
+        alert("DATA UPDATED SUCCESSFULLY")
         console.log("1 document updated");
       });
       res.redirect("http://localhost:8080/update_table")
