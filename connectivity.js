@@ -435,7 +435,7 @@ app.get("/punch_out_time/:name",(req,res)=>{
            time_add = data[0].PunchOut +","+ time
            console.log("timeadd",time_add)
            var myquery = { empID: EmailID };
-           var newvalues = { $set: {PunchOut: time_add}};
+           var newvalues = { $set: {PunchOut: time_add}, $inc: {Attendance:1}};
           
            wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
                if (err) throw err;
@@ -454,7 +454,7 @@ app.get("/punch_out_time/:name",(req,res)=>{
         
     }else{
         var myquery = { empID: EmailID };
-        var newvalues = { $set: {PunchOut: time}};
+        var newvalues = { $set: {PunchOut: time}, $inc: {Attendance:1}};
         console.log("time",time)
 
         wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
@@ -503,8 +503,8 @@ app.get("/update_it/:name",(req,res)=>{
     var time_add = ''
     wallpapermodel.find({empID:EmailID}, (err,data)=>{
         if (err) throw err
-        console.log(data,"data")
-        console.log(data[0].Time,"Time")
+        // console.log(data,"data")
+        // console.log(data[0].Time,"Time")
         if(err) throw err;
         if(data[0].Time !== null){
             console.log(data[0].Date)
@@ -525,7 +525,7 @@ app.get("/update_it/:name",(req,res)=>{
             date_add = data[0].Date+","+date
             time_add = data[0].Time+','+time
             var myquery = { empID: EmailID };
-            var newvalues = { $set: {Date:date_add,Time: time_add}, $inc: {Attendance:1}};
+            var newvalues = { $set: {Date:date_add,Time: time_add}};
            
             wallpapermodel.update(myquery, newvalues, function(err, res) {
                 if (err) throw err;
@@ -542,7 +542,7 @@ app.get("/update_it/:name",(req,res)=>{
            }
         }else{
             var myquery = { empID: EmailID };
-            var newvalues = { $set: {Date:date},$inc: {Attendance:1}};
+            var newvalues = { $set: {Date:date}};
            
             wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
                 if (err) throw err;
@@ -554,7 +554,7 @@ app.get("/update_it/:name",(req,res)=>{
            
         }else{
             var myquery = { empID: EmailID };
-            var newvalues = { $set: {Time:time,Date:date},$inc: {Attendance:1}};
+            var newvalues = { $set: {Time:time,Date:date}};
            
             wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
                 if (err) throw err;
