@@ -134,6 +134,13 @@ app.get('/about_us',(req,res)=>{
     res.sendFile(__dirname + "/views/about_us.html")
 })
 
+app.get("/search_by_dep",(req,res)=>{
+    res.sendFile(__dirname+"/views/search_by_dep.html")
+})
+
+app.get("/main_home",(req,res)=>{
+    res.sendFile(__dirname+"/views/Homespage.html")
+})
 
 
 
@@ -495,8 +502,11 @@ app.get("/update_it/:name",(req,res)=>{
     var date_add = ''
     var time_add = ''
     wallpapermodel.find({empID:EmailID}, (err,data)=>{
+        if (err) throw err
+        console.log(data,"data")
+        console.log(data[0].Time,"Time")
         if(err) throw err;
-        if(data[0].Time != null){
+        if(data[0].Time !== null){
             console.log(data[0].Date)
             // dataa = JSON.parse(data)
             let s = data[0].Date

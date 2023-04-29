@@ -1,0 +1,119 @@
+body{
+    background: #e0e0e0;
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Varela Round', sans-serif;
+}
+h1{
+  font-size: 45px;
+  font-weight: bold;
+}
+h2{
+  font-size: 35px;
+}
+
+.box{
+    /*this is old design
+    border-radius: 50px;
+    background: #e0e0e0;
+    box-shadow: 20px 20px 60px #bebebe ,
+                 -20px -20px 60px #ffffff;
+                 height: 150px;
+                 */
+
+                 padding: 1.3em 5em;
+                 background: #efefefe1;
+                 border: none;
+                 border-radius: 45px;
+                 color: #444;
+                 font-size: 1rem;
+                 font-weight: 700;
+                 letter-spacing: .2rem;
+                 
+                 margin-left: 15px ;
+                 margin-right: 15px;
+                margin-bottom: 40px;
+                 outline: none;
+                 cursor: pointer;
+                 transition: .2s ease-in-out;
+                 box-shadow: -6px -6px 14px rgba(255, 255, 255, .7),
+                             -6px -6px 10px rgba(255, 255, 255, .5),
+                             6px 6px 8px rgba(255, 255, 255, .075),
+                             6px 6px 10px rgba(0, 0, 0, .15);
+}
+
+
+
+/*6 button css*/
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 50px;
+    grid-row-gap: 4em;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .button {
+    /*old css
+    color: #090909;
+  padding: 0.7em 8.7em;
+  
+  height: 150px;
+  font-size: 18px;
+  border-radius: 0.5em;
+  background: #e8e8e8;
+  border: 1px solid #e8e8e8;
+  transition: all .3s;
+  box-shadow: 6px 6px 12px #c5c5c5,
+             -6px -6px 12px #ffffff;
+*/
+
+padding: 1.3em 5em;
+  background: #efefefe1;
+  border: none;
+  border-radius: 45px;
+  color: #444;
+  font-size: 1.1rem;
+  font-weight: 700;
+  height: 150px;
+  margin-top: 20px;
+  letter-spacing: .2rem;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  transition: .2s ease-in-out;
+  box-shadow: -6px -6px 14px rgba(255, 255, 255, .7),
+              -6px -6px 10px rgba(255, 255, 255, .5),
+              6px 6px 8px rgba(255, 255, 255, .075),
+              6px 6px 10px rgba(0, 0, 0, .15);
+
+  }
+  
+  .button:hover {
+    box-shadow: -2px -2px 6px rgba(255, 255, 255, .6),
+              -2px -2px 4px rgba(255, 255, 255, .4),
+              2px 2px 2px rgba(255, 255, 255, .05),
+              2px 2px 4px rgba(0, 0, 0, .1);
+  }
+
+  .button:active{
+    box-shadow: inset -2px -2px 6px rgba(255, 255, 255, .7),
+              inset -2px -2px 4px rgba(255, 255, 255, .5),
+              inset 2px 2px 2px rgba(255, 255, 255, .075),
+              inset 2px 2px 4px rgba(0, 0, 0, .15);
+  }
+
+  /*icon css*/
+  .material-symbols-rounded{
+    font-variation-settings: 
+  'FILL' 100,
+  'wght' 400,
+  'GRAD' 200,
+  'opsz' 48;
+  }
+
+#btnLanguage{
+    font-size: 50px;
+    vertical-align: middle;
+    margin-top: 1px;
+}
