@@ -19,13 +19,19 @@
 </head>
 <body>
 
-    <a style="color: rgb(0, 0, 0);" href="http://localhost:8080/main_home"> <button   style="border-collapse: collapse; color: rgb(7, 7, 7);" class="btn btn-success">Home</button></a>
+    <a style="color: rgb(0, 0, 0);" href="http://localhost:8080/main_home"> <button   style="border-collapse: collapse; color: rgb(7, 7, 7);" class="btn btn-success"><span class="material-symbols-rounded" id="btnLanguage">
+        home
+        </span></button></a>
     <center>
     <div class=container4>
         <p>
-            <a href="http://localhost:8080/takeAttendance"><button type="button" class="btn btn-danger btn-lg">Take Attendance/Punch-In</button></a>
+            <a href="http://localhost:8080/takeAttendance"><button type="button" class="btn btn-danger btn-lg"><span class="material-symbols-rounded" id="btnLanguage">
+                login
+                </span><br>Take Attendance/Punch-In</button></a>
             <br><br><br>
-            <a href="http://localhost:8080/puchout"><button type="button" class="btn btn-success btn-lg">Punch-Out</button></a>
+            <a href="http://localhost:8080/puchout"><button type="button" class="btn btn-success btn-lg"><span class="material-symbols-rounded" id="btnLanguage">
+                logout
+                </span><br>Punch-Out</button></a>
     
         </div>
         </center>
@@ -35,7 +41,7 @@
         font-family: 'Roboto', sans-serif;
         font-family: 'Varela Round', sans-serif;
     }
-
+    
     div.container4 {
         height: 20rem;
         position: relative;
@@ -100,6 +106,20 @@
               inset 2px 2px 4px rgba(0, 0, 0, .15);
   }
 
+ 
+
+  .material-symbols-rounded{
+    font-variation-settings: 
+  'FILL' 100,
+  'wght' 400,
+  'GRAD' 200,
+  'opsz' 48;
+  }
+  #btnLanguage{
+    font-size: 40px;
+    vertical-align: middle;
+    margin-top: 1px;
+}
 
     
     </style>
