@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <a style="color: white;" href="http://localhost:8080/getDataForWorker"> <button   style="border-collapse: collapse; color: white;" class="btn btn-success">Home</button></a>
 
 <div class=container4>
@@ -19,4 +19,137 @@ div.container4 p {
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%) }
-</style>
+</style> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <!--icons link-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <!--font link-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto&family=Varela+Round&display=swap" rel="stylesheet">
+
+
+
+    <title>Document</title>
+</head>
+<body>
+
+    <a style="color: rgb(0, 0, 0);" href="http://localhost:8080/main_home"> <button   style="border-collapse: collapse; color: rgb(7, 7, 7);" class="btn btn-success"><span class="material-symbols-rounded" id="btnLanguage">
+        home
+        </span></button></a>
+    <center>
+    <div class=container4>
+        <p>
+            <a href="http://localhost:8080/getAttendanceDataForAdmin"><button type="button" class="btn btn-danger btn-lg"><span class="material-symbols-rounded" id="btnLanguage">
+                person Remove <br>
+                </span><br>Delete Worker Data</button></a>
+            <br><br><br>
+            <a href="http://localhost:8080/update_table"><button type="button" class="btn btn-success btn-lg"><span class="material-symbols-rounded" id="btnLanguage">
+                Upgrade
+                </span><br>Update</button></a>
+                <br><br><br>
+                <a href="http://localhost:8080/add_Admin"><button type="button" class="btn btn-success btn-lg"><span class="material-symbols-rounded" id="btnLanguage">
+                    Person Add
+                    </span><br>Add Admin</button></a>
+    
+        </div>
+        </center>
+    <style>
+    body{
+        background: #e0e0e0;
+        font-family: 'Roboto', sans-serif;
+        font-family: 'Varela Round', sans-serif;
+    }
+    
+    div.container4 {
+        height: 32rem;
+        position: relative;
+        padding: 1.3em 5em;
+                 background: #efefefe1;
+                 border: none;
+                 border-radius: 45px;
+                 color: #444;
+                 font-size: 1rem;
+                 font-weight: 700;
+                 letter-spacing: .2rem;
+                 
+                 margin-left: 100px ;
+                 margin-right: 100px;
+                 margin-top: 90px;
+                margin-bottom: 40px;
+                 outline: none;
+                 cursor: pointer;
+                 transition: .2s ease-in-out;
+                 box-shadow: -6px -6px 14px rgba(255, 255, 255, .7),
+                             -6px -6px 10px rgba(255, 255, 255, .5),
+                             6px 6px 8px rgba(255, 255, 255, .075),
+                             6px 6px 10px rgba(0, 0, 0, .15);
+
+        
+    
+    }
+
+    button{
+        padding: 1.3em 5em;
+  background: #efefefe1;
+  border: none;
+  border-radius: 45px;
+  color: #444;
+  font-size: 1.1rem;
+  font-weight: 700;
+  height: 120px;
+  width: 350px;
+  margin-top: 20px;
+  letter-spacing: .2rem;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  transition: .2s ease-in-out;
+  box-shadow: -6px -6px 14px rgba(255, 255, 255, .7),
+              -6px -6px 10px rgba(255, 255, 255, .5),
+              6px 6px 8px rgba(255, 255, 255, .075),
+              6px 6px 10px rgba(0, 0, 0, .15);
+
+    }
+
+    button:hover {
+    box-shadow: -2px -2px 6px rgba(255, 255, 255, .6),
+              -2px -2px 4px rgba(255, 255, 255, .4),
+              2px 2px 2px rgba(255, 255, 255, .05),
+              2px 2px 4px rgba(0, 0, 0, .1);
+  }
+
+  button:active{
+    box-shadow: inset -2px -2px 6px rgba(255, 255, 255, .7),
+              inset -2px -2px 4px rgba(255, 255, 255, .5),
+              inset 2px 2px 2px rgba(255, 255, 255, .075),
+              inset 2px 2px 4px rgba(0, 0, 0, .15);
+  }
+
+ 
+
+  .material-symbols-rounded{
+    font-variation-settings: 
+  'FILL' 100,
+  'wght' 400,
+  'GRAD' 200,
+  'opsz' 48;
+  }
+  #btnLanguage{
+    font-size: 40px;
+    vertical-align: middle;
+    margin-top: 1px;
+}
+
+    
+    </style>
