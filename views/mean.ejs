@@ -5,17 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Worker</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="style.css">
+    <!--icons link-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <!--font link-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto&family=Varela+Round&display=swap" rel="stylesheet">
+
+
+<!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 <body>
-  <header>
-    <a style="color: white;" href="http://localhost:8080/main_home"> <button   style="border-collapse: collapse; color: white;" class="btn btn-success">Home</button></a>
 
-</header>
+
+  <a style="color: rgb(0, 0, 0);" href="http://localhost:8080/main_home"> <button   style="border-collapse: collapse; color: rgb(7, 7, 7);" ><span class="material-symbols-rounded" id="btnLanguage">
+    home
+    </span></button></a>
+    <br>
+    <br>
+<div class="box">
     <!-- < -->
   <div class="form-group" id="container">
    
@@ -99,19 +112,42 @@
     </div>
   
 </div>
-<center>  <button class="btn btn-primary" type="button" id="btnValidate" value="Validate" onclick=" validate()">Submit form</button></center>
+<center>  <button  type="button" id="btnValidate" value="Validate" onclick=" validate()">Submit form</button></center>
 </form>
 
+  </div>
   </div>
   <style>
     body {
   height: 100vh;
+  background-color: #e0e0e0;
   font-family: Arial, Helvetica, sans-serif;
   background-image: url("/upload/pexels-joão-jesus-925743.jpg");
   align-items: center;
   background-size: cover;
   background-position: center;
   /* display: flex; */
+}
+.box{
+    padding: 1.3em 5em;
+                 background: #efefefe1;
+                 border: none;
+                 border-radius: 45px;
+                 color: #444;
+                 font-size: 1rem;
+                 font-weight: 700;
+                 letter-spacing: .2rem;
+                 
+                 margin-left: 120px ;
+                 margin-right: 120px;
+                margin-bottom: 60px;
+                 outline: none;
+                 cursor: pointer;
+                 transition: .2s ease-in-out;
+                 box-shadow: -6px -6px 14px rgba(255, 255, 255, .7),
+                             -6px -6px 10px rgba(255, 255, 255, .5),
+                             6px 6px 8px rgba(255, 255, 255, .075),
+                             6px 6px 10px rgba(0, 0, 0, .15);
 }
     #container{
       width: 900px;
@@ -120,6 +156,38 @@
   /* border: 3px solid green; */
   padding: 10px;
     }
+button{
+    padding: 1.3em 5em;
+  background: #efefefe1;
+  border: none;
+  border-radius: 45px;
+  color: #444;
+  font-size: 1.1rem;
+  font-weight: 700;
+ 
+  margin-top: 20px;
+  letter-spacing: .2rem;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  transition: .2s ease-in-out;
+  box-shadow: -6px -6px 14px rgba(255, 255, 255, .7),
+              -6px -6px 10px rgba(255, 255, 255, .5),
+              6px 6px 8px rgba(255, 255, 255, .075),
+              6px 6px 10px rgba(0, 0, 0, .15);
+}
+button:hover {
+    box-shadow: -2px -2px 6px rgba(255, 255, 255, .6),
+              -2px -2px 4px rgba(255, 255, 255, .4),
+              2px 2px 2px rgba(255, 255, 255, .05),
+              2px 2px 4px rgba(0, 0, 0, .1);
+  }
+  button:active{
+    box-shadow: inset -2px -2px 6px rgba(255, 255, 255, .7),
+              inset -2px -2px 4px rgba(255, 255, 255, .5),
+              inset 2px 2px 2px rgba(255, 255, 255, .075),
+              inset 2px 2px 4px rgba(0, 0, 0, .15);
+  }
   </style>
 
 
@@ -163,14 +231,11 @@
             return false;
         }
     }
-
-
 function validate()
 {
   var text = document.getElementById('phone').value;
   var lblError2 = document.getElementById("lblError2");
   var btn = document.getElementById('btnValidate')
-
   var regx = /^[6-9]\d{9}$/ ;
   if(regx.test(text)){
   lblError2.innerHTML = "Valid Number"
@@ -179,29 +244,8 @@ function validate()
   else{
   lblError2.innerHTML = "Invalid Number."
   btn.type = "button"
-
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //     function validate(){
 //     var date = document.getElementById("Date").value;
 //     btn = document.getElementById("btn")
