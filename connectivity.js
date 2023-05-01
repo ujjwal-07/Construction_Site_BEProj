@@ -134,9 +134,7 @@ app.get('/about_us',(req,res)=>{
     res.sendFile(__dirname + "/views/about_us.html")
 })
 
-app.get("/search_by_dep",(req,res)=>{
-    res.sendFile(__dirname+"/views/search_by_dep.html")
-})
+
 
 app.get("/main_home",(req,res)=>{
     res.sendFile(__dirname+"/views/Homespage.html")
@@ -275,6 +273,16 @@ app.get("/seedetail/:empID",(req,res)=>{
     wallpapermodel.find({empID : empID_data}, (err,data)=>{
         res.render('see_detail',{
             dataList : data
+        })
+    })
+})
+
+
+app.get("/search_by_dep",(req,res)=>{
+    wallpapermodel.find({},(err,data)=>{
+        if (err) throw err
+        res.render('search_by_dep',{
+            dataList:data
         })
     })
 })
