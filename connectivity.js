@@ -468,8 +468,10 @@ app.get("/punch_out_time/:name",(req,res)=>{
         wallpapermodel.updateOne(myquery, newvalues, function(err, res) {
             if (err) throw err;
             console.log("1 document updated");
-            
+
             });
+            res.redirect("http://localhost:8080/update_table")
+
     }
 
            

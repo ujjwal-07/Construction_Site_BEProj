@@ -14,9 +14,6 @@ from datetime import date
 import webbrowser  
 
 
-
-
-
 path = 'public\Images_of_students'
 image = [] 
 classNames = []
