@@ -15,7 +15,7 @@ import webbrowser
 
 
 path = 'public\Images_of_students'
-image = [] 
+image = []  
 classNames = []
 myList = os.listdir(path)
 print(myList)

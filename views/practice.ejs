@@ -9,7 +9,9 @@
     <div class="form-row">
       <div class="col-md-6 mb-3">
         <label for="validationCustom03">Phone Number</label>
-        <input type="text" class="form-control" id="validationCustom03" placeholder="Phone Number" name="phone">
+        <input type="text" class="form-control" id="phone" placeholder="Phone Number" onblur="validate()" name="phone">
+        <span class="error" id="lblError"></span>
+
       </div>
       <div class="col-md-3 mb-3">
         <label for="validationCustom04">Experience</label>
@@ -26,7 +28,7 @@
         <label for="validationCustom04">EMPID</label>
         <input type="text" class="form-control" id="validationCustom04" placeholder="bond" name="empID" value="<%= data.empID %>">
       </div>
-      <center>  <button class="btn btn-primary" type="submit">Submit form</button></center>
+      <center>  <button class="btn btn-primary" type="submit" id="btnValidate">Submit form</button></center>
 
     </div>
 
@@ -71,3 +73,36 @@
   padding: 10px;
     }
 </style>
+<script type="text/javascript">
+ 
+function validate()
+{
+  
+var text = document.getElementById('phone').value;
+console.log(text)
+var lblError = document.getElementById("lblError");
+var btn = document.getElementById('btnValidate')
+var regx = /^[6-9]\d{9}$/ ;
+if(regx.test(text)){
+lblError.innerHTML = "Valid Number"
+btn.type = "submit"
+}
+else{
+lblError.innerHTML = "Invalid Number."
+btn.type = "button"
+}
+}
+//     function validate(){
+//     var date = document.getElementById("Date").value;
+//     btn = document.getElementById("btn")
+//     date = parseInt(date.substring(2,4))
+//     console.log(date)
+//     if(date - 18 < 0){
+//       btn.type = "submit"
+//     }
+//     else if(date - 18 ==0 || date-18 > 0){
+//       console.log("im in under")
+//         alert("Age cannot be less than 18, Invalid Birth Date")    
+//     }
+// }
+</script>

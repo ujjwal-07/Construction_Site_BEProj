@@ -179,7 +179,7 @@ app.post('/post', upload.single('file') ,(req, res)=>{
         Department : req.body.Department,
         Previous_comp :  req.body.Previous_comp,
         experience : req.body.experience,
-        bond_for_days : req.body.bond_for_days,
+        bond_for_days : req.body.bond_for_days, 
         Attendance:0,
         empID: req.body.Department[0]+"-"+req.body.fname[0].toUpperCase()+req.body.lname[0].toUpperCase()+req.body.birthDate.slice(-4),
         Date : '',
@@ -470,7 +470,7 @@ app.get("/punch_out_time/:name",(req,res)=>{
             console.log("1 document updated");
 
             });
-            res.redirect("http://localhost:8080/update_table")
+            res.redirect("http://localhost:8080/getAttendanceData")
 
     }
 
